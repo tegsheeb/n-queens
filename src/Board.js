@@ -62,7 +62,7 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
@@ -159,11 +159,42 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      //create board using rows()
+      var board = this.rows();
+
+      //create queen counter var, set to 0
+      var count = 0;
+      //start for loop to iterate over rows in board
+      var colIdx = majorDiagonalColumnIndexAtFirstRow;
+      for (var i = 0; i < board.length; i += 1) {
+        //check if board[i][columnindexGivenArg] has queen && is not undefined <--- SUPER IMPORTANT!!!
+        if (board[i][colIdx] === 1 && board[i][colIdx] !== undefined) {
+          //if yes,increase counter by 1
+          count += 1;
+        }
+        //increase given col index by 1
+        colIdx += 1;
+      }
+      //if total count > 1
+      if (count > 1) {
+        //return true
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      //create board
+      var board = this.rows();
+      //iterate over each row of board
+      for (var i = (0 - (board.length - 1)); i < board.length; i += 1) {
+        //on each row, call above function
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          //if true,return true
+          return true;
+        }
+      }
       return false; // fixme
     },
 
