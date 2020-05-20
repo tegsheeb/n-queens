@@ -79,14 +79,36 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // return false; // fixme
+      var totalInRow = 0;
+      var currenRow = this.get(rowIndex);
+
+      for (var i = 0; i < currenRow.length; i++) {
+        if (currenRow[i] === 1) {
+          totalInRow++;
+        }
+      }
+      if (totalInRow > 1) {
+        return true;
+      }
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // return false; // fixme
+      // set a variable for a board which can be returned from rows() method
+      var board = this.rows();
+      // iterate oover the board length
+      for (var i = 0; i < board.length; i++) {
+        // check if the invididual row has a conflict with method above
+        if (this.hasRowConflictAt(i)) {
+          // yes has conflict,return true
+          return true;
+        }
+      }
+      return false;
     },
-
 
 
     // COLUMNS - run from top to bottom
@@ -94,12 +116,40 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+    // create a board using rows
+      var board = this.rows();
+      // set total in current col to be zero
+      var totalinCol = 0;
+      // iterate over the board
+      for (var i = 0; i < board.length; i++) {
+        //check if board col has queen
+        if (board[i][colIndex] === 1) {
+          //if so, increment the totall in col by one
+          totalinCol++;
+        }
+      }
+
+      if (totalinCol > 1) {
+        return true;
+      }
+      // check if total incol is greater than one
+      // if so, return true
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      // return false; // fixme
+      var board = this.rows();
+      // iterate oover the board length
+      for (var i = 0; i < board.length; i++) {
+        // check if the invididual col has a conflict with method above
+        if (this.hasColConflictAt(i)) {
+          // yes has conflict,return true
+          return true;
+        }
+      }
+      return false;
     },
 
 
