@@ -16,15 +16,43 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  // var solution = undefined; //fixme
+
+  var board = new Board( { 'n': n } );
+
+  console.log(board.rows());
+
+  var maxIdx = n - 1;
+  var placeRooks = function(n) {
+    if (n < 0) {
+      return board.rows();
+    }
+    board.togglePiece(n, n);
+
+    return placeRooks(n - 1);
+
+  };
+  var solution = placeRooks(maxIdx);
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   return solution;
 };
 
+
+
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  // var solutionCount = undefined; //fixme
+  //n factorial
+
+  var factorial = function (n) {
+    if (n === 0) {
+      return 1;
+    }
+    return n * factorial(n - 1);
+  };
+
+  var solutionCount = factorial(n);
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
@@ -45,3 +73,37 @@ window.countNQueensSolutions = function(n) {
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
+
+/*
+ // create a new board
+ var newBoard = new Board({n: n});
+ // counter how many rooks are on the board
+ var count = 0;
+
+ // declare helper function (recursive)
+ var placeRooks = function (row = 0) {
+   // Base case
+   // check if the counter is equal to n
+   if (count === n) {
+     // if counter is equal to n, then return new board (= solution)
+     solution = newBoard;
+   }
+   // Main recursion/case
+   for (var i = 0; i < n; i++) {
+     //place the first rook on the board
+     newBoard.togglePiece(row, i);
+     //iterate through each place on the board for 2nd rook
+     // check if there is any hasAnyRooksConflicts (column and row conflicts)
+
+     if (hasAnyRooksConflicts) {
+       newBoard.togglePiece(row + 1, i);
+     }
+     count++;
+     }
+     // if there is not any conflict, increment the counter by 1
+     // then we iterate / recurse starting from the next row
+     placeRooks (row + 1);
+   }
+ };
+
+*/
