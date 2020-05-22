@@ -20,8 +20,6 @@ window.findNRooksSolution = function(n) {
 
   var board = new Board( { 'n': n } );
 
-  console.log(board.rows());
-
   var maxIdx = n - 1;
   var placeRooks = function(n) {
     if (n < 0) {
@@ -60,7 +58,71 @@ window.countNRooksSolutions = function(n) {
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
+  //var solution = undefined; //fixme
+
+  // create a new board
+  var newBoard = new Board({ 'n': n });
+
+
+
+  // declare helper function (recursive)
+  var placeQueens = function (row = 0) {
+    // Base case
+    // check if the counter is equal to n
+    //console.log('this is n: ', n);
+    // var sum = function () {
+    //   var sum = 0;
+    //   newBoard.forEach(row.forEach(ele => sum + ele));
+    //   return sum;
+    // };
+
+    // sum = 0;
+    // for (var i =0; i <  )
+
+    if (row === n ) {
+      // if counter is equal to n, then return new board (= solution)
+      return newBoard.rows();
+    }
+    for (var i = 0; i < n; i++) {
+      //place the first rook on the board
+      newBoard.togglePiece(row, i);
+      //iterate through each place on the board for 2nd rook
+      // check if there is any hasAnyRooksConflicts (column and row conflicts)
+
+      if (!newBoard.hasAnyQueenConflictsOn(row, i)) {
+        // newBoard.togglePiece(row + 1, i);
+        console.log('this is our board: ', newBoard.rows());
+        return placeQueens(row + 1);
+        newBoard.togglePiece(row, i);
+      } else {
+        newBoard.togglePiece(row, i);
+      }
+      // How to go to next i in same first row
+      //}
+    }
+    //}
+
+    // if there is not any conflict, increment the counter by 1
+    // then we iterate / recurse starting from the next row
+  };
+
+  var solution = placeQueens(0);
+
+  // for (var i = 0; i < n; i++) {
+
+  // }
+  // if (n === 0) {
+  //   var solution = [];
+  // } else if (n === 1) {
+  //   var solution = [[1]];
+  // } else {
+  //   if (n % 2 === 0 && n > 3) {
+  //     newBoard.togglePiece(0, 1);
+  //   } else if ( n % 2 !== 0 && n > 3) {
+  //     newBoard.togglePiece(0, 0);
+  //   }
+  //   var solution = placeQueens(1);
+  // }
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
   return solution;
@@ -74,36 +136,3 @@ window.countNQueensSolutions = function(n) {
   return solutionCount;
 };
 
-/*
- // create a new board
- var newBoard = new Board({n: n});
- // counter how many rooks are on the board
- var count = 0;
-
- // declare helper function (recursive)
- var placeRooks = function (row = 0) {
-   // Base case
-   // check if the counter is equal to n
-   if (count === n) {
-     // if counter is equal to n, then return new board (= solution)
-     solution = newBoard;
-   }
-   // Main recursion/case
-   for (var i = 0; i < n; i++) {
-     //place the first rook on the board
-     newBoard.togglePiece(row, i);
-     //iterate through each place on the board for 2nd rook
-     // check if there is any hasAnyRooksConflicts (column and row conflicts)
-
-     if (hasAnyRooksConflicts) {
-       newBoard.togglePiece(row + 1, i);
-     }
-     count++;
-     }
-     // if there is not any conflict, increment the counter by 1
-     // then we iterate / recurse starting from the next row
-     placeRooks (row + 1);
-   }
- };
-
-*/
